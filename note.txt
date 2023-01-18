@@ -1,0 +1,5 @@
+to run test, type python manage.py test. "coverage html" to refesh our coverage
+remember to know which test to run, sometimes you can utilize the help of coverage.
+
+Things to test:
+first we tested our category entry.
