@@ -1,2 +1,5 @@
 django>4.1<=4.10
 pillow
+coverage
+flake8
+flake8-isort

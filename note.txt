@@ -1,5 +1,13 @@
 to run test, type python manage.py test. "coverage html" to refesh our coverage
 remember to know which test to run, sometimes you can utilize the help of coverage.
+coverage.run manage.py test. to get the text in coverage
 
 Things to test:
 first we tested our category entry.
+
+
+we install flake8 to help arrange our code to follow pep 8 instructions,
+after installing we create a setup.cfg file, in the file we will ask flake 8
+to ignore venv and add line maximum
+
+install flake8-isort to view and sort your code to make sure it follows pip8 rules
