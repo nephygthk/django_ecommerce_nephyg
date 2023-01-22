@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
+from .managers import ProductManager
+
 
 # Create your models here
 class Category(models.Model):
@@ -31,6 +33,9 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+    products = ProductManager()
 
     class Meta:
         verbose_name_plural = 'Products'

@@ -3,3 +3,19 @@ create media url
 arrange django admin
 test store models
 build store url views and template
+test the views and urls
+add flake8 and flake8-isort to sort the code to follow pep8
+
+
+rectoring the code
+1, bring the category function to context_processors.py
+2, create a product manager that filters active products
+3, remove comments on settings.py
+4, change the detail html to product detail
+5, add description data to detail page
+6, test allowed host in settings
+7, runtest again. if errors then correct them.
+
+
+next stage.
+add static folder.

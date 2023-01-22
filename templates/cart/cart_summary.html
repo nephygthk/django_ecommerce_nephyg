@@ -1,0 +1,168 @@
+{% extends "../base.html" %}
+
+{% block title %}Shopping Cart Summary{% endblock %}
+
+{% block sub_content %}
+
+<div class="row d-flex justify-content-center my-4">
+  <div class="col-md-8">
+    <div class="card mb-4 card-sm">
+      <div class="card-header py-3">
+        <h5 class="mb-0">Cart Summary</h5>
+      </div>
+      {% if cart|length <= 0 %}
+      <p class="text-center py-5 lead fw-bold">Your cart is empty</p>
+      {% else %}
+        {% for item in cart %}
+          {% with product=item.product %}
+            <div class="card-body product-item" data-index="{{product.id}}">
+              <!-- Single item -->
+              <div class="row">
+                <div class="col-lg-3 col-md-12 mb-2 mb-lg-0">
+                  <!-- Image -->
+                  <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                    <img src="{{product.image.url}}"
+                      class="w-50 img-fluid " alt="Blue Jeans Jacket" />
+                  </div>
+                  <!-- Image -->
+                </div>
+
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                  <!-- Data -->
+                  <p><strong>{{product.title|title}}</strong></p>
+                  <p>{{product.description|slice:"0:100"}}</p>
+                  <p class="text-muted">Prize: &#x20A6;{{product.price}}</p>
+                  <!-- <p>Size: M</p> -->
+                  <!-- Data -->
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                  <div class="d-flex justify-content-between">
+                    <!-- Quantity -->
+                    <label for="select">Qty</label>
+                    <select class="form-select form-select-sm fw-bold w-50" id="select{{product.id}}">
+                      <option selected>{{item.qty}}</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                    <!-- Quantity -->
+
+                    <!-- Price -->
+                    <p class="text-start text-md-center">
+                      <strong>&#x20A6;{{item.total_price}}</strong>
+                    </p>
+                    <!-- Price -->
+                  </div> 
+                  <button type="button"  data-index="{{product.id}}" class="btn btn-danger fw-bold btn-sm  mt-5 float-end delete-button">
+                    Remove
+                  </button>
+                  <button type="button" data-index="{{product.id}}" class="btn btn-primary fw-bold btn-sm  mt-5 me-lg-2 float-end update-button">
+                    Update
+                  </button>
+                </div>
+              </div> 
+              <hr>         
+            </div>        
+          {% endwith %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-header py-3">
+        <h5 class="mb-0">Checkout Now</h5>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+            Subtotal
+            <span id="subtotal">{{cart.get_total_price}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Shipping
+            <span>0</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Vat/Tax
+            <span>0</span>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+            <div>
+              <strong>Total amount</strong>
+              <!-- <strong>
+                <p class="mb-0">(including VAT)</p>
+              </strong> -->
+            </div>
+            <span><strong id="total">&#x20A6;{{cart.get_total_price}}</strong></span>
+          </li>
+        </ul>
+
+        <button type="button" class="btn btn-secondary fw-bold w-100 btn-sm ">
+          Go to checkout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).on('click', '.delete-button', function(e){
+    e.preventDefault();
+    let productCard = $(this).data('index');
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart:remove_from_cart' %}",
+      data:{
+        productId:$(this).data('index'),
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post"
+      },
+      success: function(json){
+        $('.product-item[data-index="'+productCard+'"]').remove();
+        document.getElementById('subtotal').innerHTML = json.subtotal;
+        document.getElementById('total').innerHTML = json.subtotal;
+        document.getElementById('cart_qty').innerHTML = json.qty;
+      },
+      error: function(xhr, errmsg, err){
+        console.log(err);
+      }
+    })
+
+  });
+</script>
+
+<script>
+  $(document).on('click', '.update-button', function(e){
+    e.preventDefault();
+    let productCard = $(this).data('index');
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart:update_cart_item' %}",
+      data:{
+        productId:$(this).data('index'),
+        productQty:$('#select'+productCard+' option:selected').text(),
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post"
+      },
+      success: function(json){
+        document.getElementById('subtotal').innerHTML = json.subtotal;
+        document.getElementById('total').innerHTML = json.subtotal;
+        document.getElementById('cart_qty').innerHTML = json.qty;
+      },
+      error: function(xhr, errmsg, err){
+        console.log(err);
+      }
+    })
+
+  });
+</script>
+
+{% endblock %}
