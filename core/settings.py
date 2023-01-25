@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     # my project applictions
     'store',
     'cart',
+    'account'
 ]
 
 MIDDLEWARE = [
@@ -98,3 +99,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom user model
+AUTH_USER_MODEL = 'account.Customer'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
+
+# Email setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

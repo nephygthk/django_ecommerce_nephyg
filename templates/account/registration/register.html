@@ -1,0 +1,65 @@
+{% extends "../../base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block sub_content  %}
+<style>
+    .container-fluid {
+        max-width: 100%;
+    }
+
+    .account-form input {
+        border: 2px solid #ccc;
+        height: calc(2em + .75rem + 2px);
+    }
+
+    .account-form input:focus {
+        border-color: #1b1e20;
+        box-shadow: none;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-12 col-lg-5  mx-auto">
+        <form class="account-form p-4 rounded" action="." method="POST">
+
+            {% csrf_token %}
+            <h3 class="mb-4">Register</h3>
+
+            {% if form.errors %}
+            <p>Please Correct the errors below</p>
+            {% for field in form %}
+                {% if field.errors %}
+                    <div class="alert alert-primary" role="alert">
+                        {{field.label}}: {{field.errors|striptags}}
+                    </div> 
+                {% endif %}
+            {% endfor%}
+            {% endif %}
+
+            <label class="form-label fw-bold">{{ form.user_name.label}}<span class="text-muted small">(required)</span> </label>
+            {{ form.user_name}}
+
+            <label class="form-label fw-bold">{{ form.email.label}} <span class="text-muted small">(required)</span> </label>
+            {{ form.email}}
+
+            <label class="form-label fw-bold">{{ form.password.label}} <small class="text-muted">At least 8 characters and one digit </small></label>
+            {{ form.password}}
+            
+
+            <label class="form-label fw-bold">{{ form.password2.label}}</label>
+            {{ form.password2}}
+            <div class="d-grid gap-2">
+                <input type="hidden" name="next" value="{{ next }}">
+                <button class="btn btn-secondary py-2 mb-4 mt-5 fw-bold" type="submit" value="Log-in">Sign in
+                </button>
+            </div>
+        </form>
+        <p class="small text-center pt-4">
+            <a href="">Already have an account?</a> 
+        </p>          
+    </div>
+</div>
+
+{% endblock %}
