@@ -5,3 +5,4 @@ flake8
 flake8-isort
 django_countries
 six
+stripe3

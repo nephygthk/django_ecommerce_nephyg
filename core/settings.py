@@ -24,7 +24,9 @@ INSTALLED_APPS = [
     # my project applictions
     'store',
     'cart',
-    'account'
+    'account',
+    'payment',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -105,5 +107,15 @@ AUTH_USER_MODEL = 'account.Customer'
 LOGIN_REDIRECT_URL = '/account/dashboard'
 LOGIN_URL = '/account/login/'
 
+
+CART_SESSION_ID = 'cartkey'
+
 # Email setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# webhook stripe secret. THIS IS GOTTEN WHEN YOU LOGIN STRIPE WITH CLI
+
+
+
+
+# to listen on stripe and forward is = stripe listen --forward-to localhost:8000/payment/webhook/

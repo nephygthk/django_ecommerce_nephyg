@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 
 from account.models import Customer
+from orders.views import user_orders
 
 
 from .forms import RegistrationForm, UserEditForm
@@ -60,7 +61,10 @@ def account_activate(request, uidb64, token):
 
 @login_required
 def dashboard(request):
-    return render(request,'account/user/dashboard.html',{})
+    orders = user_orders(request)
+    return render(request,
+                  'account/user/dashboard.html',
+                  {'section': 'profile', 'orders': orders})
 
 def activation_invalid(request):
     return render(request, 'account/registration/activation_invalid.html')

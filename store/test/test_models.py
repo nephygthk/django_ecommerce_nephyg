@@ -1,9 +1,7 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
 
 from store.models import Category, Product
-
-
+from account.models import Customer
 class TestCategoriesModel(TestCase):
 
     def setUp(self):
@@ -21,7 +19,7 @@ class TestCategoriesModel(TestCase):
 class TestProductModel(TestCase):
     def setUp(self):
         Category.objects.create(name="phone", slug="phone")
-        User.objects.create(username='admin')
+        Customer.objects.create(email='admin@admin.com')
         self.data1 = Product.objects.create(category_id=1, title="tecno spark6",
                                             created_by_id=1, slug="tecno-spark6",
                                             price="20.00", image="django")

@@ -1,11 +1,10 @@
 from importlib import import_module
-from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import reverse
 from django.conf import settings
 
-
+from account.models import Customer
 from store.models import Category, Product
 from store.views import all_products
 
@@ -15,7 +14,7 @@ class TestViewFunctions(TestCase):
         self.c = Client()
         # self.factory = RequestFactory()
         Category.objects.create(name="phone", slug="phone")
-        User.objects.create(username='admin')
+        Customer.objects.create(email='admin@admin.com')
         self.data1 = Product.objects.create(category_id=1, title="tecno spark6",
                                             created_by_id=1, slug="tecno-spark6",
                                             price="20.00", image="django")

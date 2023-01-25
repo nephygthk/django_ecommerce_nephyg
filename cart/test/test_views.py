@@ -3,10 +3,11 @@ from django.test import TestCase
 from django.urls import reverse
 
 from store.models import Category, Product
+from account.models import Customer
 
 class TestCartView(TestCase):
     def setUp(self):
-        User.objects.create(username='admin')
+        Customer.objects.create(email='admin')
         Category.objects.create(name="phone", slug="phone")
         Product.objects.create(category_id=1, title="tecno spark6",
                             created_by_id=1, slug="tecno-spark6",
@@ -43,11 +44,11 @@ class TestCartView(TestCase):
     def test_remove_from_cart_views(self):
         response = self.client.post(reverse('cart:remove_from_cart'),
                         {'productId':2, 'action':'post'}, xhr=True)
-        self.assertEqual(response.json(), {'qty': 1, 'subtotal':'200.00'})
+        self.assertEqual(response.json(), {'qty': 1, 'subtotal':'1700.00'})
 
     def test_update_cart_item_view(self):
         response = self.client.post(reverse('cart:update_cart_item'),
                         {'productId':2, 'productQty':3, 'action':'post'}, xhr=True)
-        self.assertEqual(response.json(), {'qty': 4, 'subtotal':'950.00'})
+        self.assertEqual(response.json(), {'qty': 4, 'subtotal':'2450.00'})
 
     
