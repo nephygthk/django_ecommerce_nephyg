@@ -1,7 +1,7 @@
 /* Bootstrap Over-ride */
 @media (min-width: 1000px){
     .container{
-        max-width: 1200px;
+        max-width: 1100px;
     }
 }
 @media (max-width: 1200px){
