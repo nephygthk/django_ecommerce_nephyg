@@ -16,7 +16,15 @@
       </a>
       <div class="card card-sm h-100">
         <a href="{{ product.get_absolute_url }}">
-          <img src="{{product.image.url}}" class="card-img-top p-3" alt="" >
+            {% for image in product.product_image.all %} 
+            {% if image.is_feature %}
+            <img
+                src="{{ image.image.url }}"
+                alt="{{ image.image.alt_text }}"
+                class="card-img-top p-3"
+            />
+            {% endif %}
+            {% endfor %}
         </a>
          
         <div class="card-body">
@@ -24,7 +32,7 @@
           <!-- <p class="card-text">{{product.description}}</p> -->
           <div class="row">
             <div class="col-6">
-              <h5 class="card-title">&#8358;{{product.price}}</h5>
+              <h6 class="card-title">&#8358;{{product.regular_price}}</h6>
             </div>
             <div class="col-6 text-center text-success">
               <p class="card-text fw-bold">In Stock</p>
