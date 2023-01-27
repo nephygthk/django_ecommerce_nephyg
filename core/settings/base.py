@@ -1,10 +1,17 @@
 import os
 from pathlib import Path
 
+import environ
+
+# Initialise environment variables
+env = environ.Env()
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
-SECRET_KEY = "django-insecure-4zv=9501^3&75atz(znz(o$_so*n+lnyvon8v6!(m)17y3b02^"
+
+SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = True
 
@@ -111,14 +118,11 @@ CART_SESSION_ID = "cartkey"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # webhook stripe secret. THIS IS GOTTEN WHEN YOU LOGIN STRIPE WITH CLI
-STRIPE_ENDPOINT_SECRET = "whsec_33c9c43417a6e42a2039e558a81ec80882dba2c6b970abc0f3275bc175d2e210"
+STRIPE_ENDPOINT_SECRET = env("STRIPE_ENDPOINT_SECRET")
 
-STRIP_SECRET_KEY = (
-    "sk_test_51MU42nBCUQwofQ4D0WvmoMh5N9KdpprwO6Obdbkded9Bbii9FQWLeeUfLOJ7gH0xIeRXso7sJJDT55Bsg9ROYmHI00Rk0q2OyT"
-)
-STRIP_PUBLIC_KEY = (
-    "pk_test_51MU42nBCUQwofQ4DjrdX8nH2sY34AxEABtNultF87M7zaBs0tehc1mI5vHhSmlDSJ3a0fMLAbJfaxIdGcwu6qYS6005xx3uQic"
-)
+STRIP_SECRET_KEY = env("STRIPE_SECRET_KEY")
+
+STRIP_PUBLIC_KEY = env("STRIP_PUBLIC_KEY")
 
 
 # to listen on stripe and forward is = stripe listen --forward-to localhost:8000/payment/webhook/

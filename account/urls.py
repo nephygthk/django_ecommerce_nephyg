@@ -62,4 +62,7 @@ urlpatterns = [
     path("addresses/edit/<slug:public_id>/", views.edit_address, name="edit_address"),
     path("addresses/delete/<slug:public_id>/", views.delete_address, name="delete_address"),
     path("addresses/set_default/<slug:public_id>/", views.set_default, name="set_default"),
+    # Wish List
+    path("wishlist", views.wishlist, name="wishlist"),
+    path("wishlist/add_to_wishlist/<int:id>", views.add_to_wishlist, name="user_wishlist"),
 ]

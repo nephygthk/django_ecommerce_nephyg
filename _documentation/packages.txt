@@ -10,4 +10,5 @@ stripe
 coverage
 six
 django_debug_toolbar
+django-environ
 
