@@ -6,9 +6,9 @@ black
 isort
 django-mptt
 pillow
-stripe
 coverage
 six
 django_debug_toolbar
 django-environ
+paypal-checkout-serversdk
 

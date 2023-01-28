@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     "store",
     "cart",
     "account",
-    "payment",
     "orders",
+    "checkout",
 ]
 
 MIDDLEWARE = [
@@ -117,12 +117,8 @@ CART_SESSION_ID = "cartkey"
 # Email setting
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# webhook stripe secret. THIS IS GOTTEN WHEN YOU LOGIN STRIPE WITH CLI
-STRIPE_ENDPOINT_SECRET = env("STRIPE_ENDPOINT_SECRET")
-
-STRIP_SECRET_KEY = env("STRIPE_SECRET_KEY")
-
-STRIP_PUBLIC_KEY = env("STRIP_PUBLIC_KEY")
+# PAYPAL
 
 
-# to listen on stripe and forward is = stripe listen --forward-to localhost:8000/payment/webhook/
+PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
+PAYPAL_CLIENT_SECRET = env("PAYPAL_CLIENT_SECRET")
